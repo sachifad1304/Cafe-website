@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Indian Café Delight</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fff9f4;
+      color: #e19bea;
+    }
+    header {
+      background-color: #8f51a2;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .menu-section {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+    h2 {
+      border-bottom: 2px solid #c070e0;
+      padding-bottom: 5px;
+      margin-top: 40px;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+    .item input {
+      width: 50px;
+      text-align: center;
+    }
+    #bill {
+      background-color: #e9e0ff;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+      border: 2px dashed #c795c2;
+    }
+    button {
+      background-color: #82357a;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #ba60a7;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Indian Café Delight 🍽️</h1>
+  <p>Flavours of India on Every Plate</p>
+</header>
+
+<section class="menu-section">
+  <h2>🍛 Food Menu</h2>
+
+  <!-- South Indian -->
+  <h3>South Indian</h3>
+  <div class="item"><span>Masala Dosa</span><span>₹70</span><input type="number" min="0" value="0" data-name="Masala Dosa" data-price="70"></div>
+  <div class="item"><span>Idli Sambar</span><span>₹50</span><input type="number" min="0" value="0" data-name="Idli Sambar" data-price="50"></div>
+  <div class="item"><span>Medu Vada</span><span>₹45</span><input type="number" min="0" value="0" data-name="Medu Vada" data-price="45"></div>
+
+  <!-- North Indian -->
+  <h3>North Indian</h3>
+  <div class="item"><span>Paneer Butter Masala</span><span>₹150</span><input type="number" min="0" value="0" data-name="Paneer Butter Masala" data-price="150"></div>
+  <div class="item"><span>Chole Bhature</span><span>₹90</span><input type="number" min="0" value="0" data-name="Chole Bhature" data-price="90"></div>
+  <div class="item"><span>Rajma Chawal</span><span>₹100</span><input type="number" min="0" value="0" data-name="Rajma Chawal" data-price="100"></div>
+
+  <!-- Western -->
+  <h3>Pizza / Pasta / Fries</h3>
+  <div class="item"><span>Margherita Pizza</span><span>₹120</span><input type="number" min="0" value="0" data-name="Margherita Pizza" data-price="120"></div>
+  <div class="item"><span>Veg Pasta</span><span>₹110</span><input type="number" min="0" value="0" data-name="Veg Pasta" data-price="110"></div>
+  <div class="item"><span>French Fries</span><span>₹60</span><input type="number" min="0" value="0" data-name="French Fries" data-price="60"></div>
+
+  <h2>☕ Beverages</h2>
+  <div class="item"><span>Masala Chai</span><span>₹20</span><input type="number" min="0" value="0" data-name="Masala Chai" data-price="20"></div>
+  <div class="item"><span>Cold Coffee</span><span>₹50</span><input type="number" min="0" value="0" data-name="Cold Coffee" data-price="50"></div>
+  <div class="item"><span>Sweet Lassi</span><span>₹40</span><input type="number" min="0" value="0" data-name="Sweet Lassi" data-price="40"></div>
+
+  <button onclick="generateBill()">Generate Bill</button>
+</section>
+
+<section id="bill">
+  <h2>Your Bill</h2>
+  <div id="bill-items"></div>
+  <h3 id="total"></h3>
+</section>
+
+<script>
+  function generateBill() {
+    const inputs = document.querySelectorAll('.item input');
+    const billItems = document.getElementById('bill-items');
+    const totalElem = document.getElementById('total');
+    
+    let total = 0;
+    let billHTML = '';
+
+    inputs.forEach(input => {
+      const quantity = parseInt(input.value);
+      const name = input.dataset.name;
+      const price = parseFloat(input.dataset.price);
+
+      if (quantity > 0) {
+        const itemTotal = quantity * price;
+        total += itemTotal;
+        billHTML += `<p>${name} x ${quantity} = ₹${itemTotal.toFixed(2)}</p>`;
+      }
+    });
+
+    if (total === 0) {
+      billItems.innerHTML = "<p>No items selected.</p>";
+      totalElem.textContent = "";
+    } else {
+      billItems.innerHTML = billHTML;
+      totalElem.textContent = `Total: ₹${total.toFixed(2)}`;
+    }
+  }
+</script>
+
+</body>
+</html>
